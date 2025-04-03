@@ -30,6 +30,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+
+        // Enable core library desugaring
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -56,4 +59,16 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Compose Foundation (Needed for Pager, shapes, background, layout basics)
+    implementation(libs.androidx.foundation)
+
+    // Compose Material Icons
+    // Core icons are included with M3, but if you need specific ones like ArrowBackIos/ArrowForwardIos
+    // that aren't in `automirrored`, you might need the extended set.
+    // AutoMirrored versions ARE in core, so this might be optional depending on exact icons used.
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended) // Often useful anyway
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs) // Use the latest version
 }
