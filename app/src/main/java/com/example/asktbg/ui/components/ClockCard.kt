@@ -1,24 +1,20 @@
 package com.example.asktbg.ui.components
 
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import android.util.Log // Android Logcat for debug logging [7].
+import androidx.compose.foundation.BorderStroke // For adding border styles to components [8].
+import androidx.compose.foundation.layout.* // Layout components like Column, Padding etc. [8].
+import androidx.compose.foundation.shape.RoundedCornerShape // For rounded card corners [8].
+import androidx.compose.material3.Card // Material 3 Card UI component [9].
+import androidx.compose.material3.CardDefaults // For default card color configurations [9].
+import androidx.compose.material3.Text // Composable for displaying text [9].
+import androidx.compose.runtime.Composable // Annotation for declaring composables [8].
+import androidx.compose.ui.Alignment // Alignment options for composables [8].
+import androidx.compose.ui.Modifier // Modifiers to apply layout or styling [8].
+import androidx.compose.ui.graphics.Color // Color values [8].
+import androidx.compose.ui.text.font.FontWeight // Font weight styling [8].
+import androidx.compose.ui.text.style.TextAlign // Text alignment options [8].
+import androidx.compose.ui.unit.dp // Density-independent pixels for layout [8].
+import androidx.compose.ui.unit.sp // Scale-independent pixels for text sizing [8].
 
 @Composable
 fun ClockCard(
@@ -28,56 +24,52 @@ fun ClockCard(
     subTextLine1: String? = null,
     subTextLine2: String? = null
 ) {
-    // Log the input parameters for debugging.
+    // Log the input parameters for debugging [7].
     Log.d("ClockCard", "ClockCard called with text: $text, subTextLine1: $subTextLine1, subTextLine2: $subTextLine2")
 
-    // Create a Card composable to represent the clock card.
+    // Create a Card composable to represent the clock card [9].
     Card(
-        modifier = modifier.fillMaxHeight(), // Ensure card tries to fill height.
-        shape = RoundedCornerShape(24.dp), // More rounded corners.
-        border = BorderStroke(1.5.dp, Color.Gray.copy(alpha = 0.6f)), // Slightly thicker border.
-        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f))
+        modifier = modifier.fillMaxHeight(), // Fill height [8].
+        shape = RoundedCornerShape(24.dp), // Rounded corners [8].
+        border = BorderStroke(1.5.dp, Color.Gray.copy(alpha = 0.6f)), // Styled border [8].
+        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.9f)) // Light transparent background [9].
     ) {
-        // Create a Column composable to arrange the content vertically inside the card.
+        // Vertical arrangement of elements [8].
         Column(
             modifier = Modifier
-                .fillMaxSize() // Fill the card
-                .padding(horizontal = 8.dp, vertical = 8.dp), // Minimal padding
+                .fillMaxSize()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            // Distribute space vertically if subtext exists
-            verticalArrangement = if (subTextLine1 != null || subTextLine2 != null) Arrangement.SpaceAround else Arrangement.Center
+            verticalArrangement = if (subTextLine1 != null || subTextLine2 != null)
+                Arrangement.SpaceAround else Arrangement.Center
         ) {
-            // Create a Text composable to display the main clock text.
+            // Main time text [9].
             Text(
                 text = text,
-                fontSize = 110.sp, // <<< MUCH BIGGER FONT SIZE
-                fontWeight = FontWeight.Normal, // Match example style (adjust if needed)
+                fontSize = 110.sp,
+                fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center,
-                lineHeight = 110.sp, // Try to match fontSize to prevent extra spacing
+                lineHeight = 110.sp,
                 maxLines = 1,
                 color = Color.Black
-                // Consider adding Modifier.weight(1f) if vertical space is tight
             )
 
-            // Only show subtext if provided
+            // Display subtexts if available [9].
             if (subTextLine1 != null || subTextLine2 != null) {
-                // Create a Column composable to arrange the subtext vertically.
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    // Check if subTextLine1 is not null and display it.
                     subTextLine1?.let {
                         Text(
-                            text = it, // e.g., PM
-                            fontSize = 36.sp, // <<< Bigger subtext
+                            text = it,
+                            fontSize = 36.sp,
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black
                         )
                     }
-                    // Check if subTextLine2 is not null and display it.
                     subTextLine2?.let {
                         Text(
-                            text = it, // e.g., MONDAY
-                            fontSize = 36.sp, // <<< Bigger subtext
+                            text = it,
+                            fontSize = 36.sp,
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black

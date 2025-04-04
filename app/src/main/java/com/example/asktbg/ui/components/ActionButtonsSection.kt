@@ -1,77 +1,62 @@
 package com.example.asktbg.ui.components
 
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.util.Log // [1] Used for logging debug messages
+import android.widget.Toast // [2] For showing quick messages on the screen
+import androidx.compose.foundation.ExperimentalFoundationApi // [3] Marks use of experimental Compose APIs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.pager.PagerState // [4] Used for tracking the page index
+import androidx.compose.runtime.Composable // [5] Marks a composable function in Jetpack Compose
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalContext // [6] Access the current context in Compose
 import androidx.compose.ui.unit.dp
-import com.example.asktbg.model.Meal
+import com.example.asktbg.model.Meal // Your custom data class
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
+@OptIn(ExperimentalFoundationApi::class) // [3]
+@Composable // [5]
 fun ActionButtonsSection(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    mealsToShow: List<Meal>, // Renamed parameter
+    mealsToShow: List<Meal>, // List of meals to display
     onShareClick: (Meal) -> Unit,
     onResetClick: () -> Unit
 ) {
-    // Obtain the current context for displaying Toast messages.
-    val context = LocalContext.current
+    val context = LocalContext.current // [6]
 
-    // Log the current pager state page for debugging purposes using Log.d.
-    Log.d("ActionButtonsSection", "Current pager page is ${pagerState.currentPage}")
+    Log.d("ActionButtonsSection", "Current pager page is ${pagerState.currentPage}") // [1]
+    Log.d("ActionButtonsSection", "Number of meals to show: ${mealsToShow.size}") // [1]
 
-    // Log the number of meals to show for debugging.
-    Log.d("ActionButtonsSection", "Number of meals to show: ${mealsToShow.size}")
-
-    // Create a Row composable to arrange the action buttons horizontally.
     Row(
-        modifier = modifier.fillMaxWidth(), // Fill the available width.
-        horizontalArrangement = Arrangement.spacedBy(16.dp) // Add spacing between the buttons.
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Create the "Share" button using the GlassButton composable.
         GlassButton(
             onClick = {
-                // Log the click event for debugging using Log.d.
-                Log.d("ActionButtonsSection", "Share button clicked")
+                Log.d("ActionButtonsSection", "Share button clicked") // [1]
 
-                // Check if there are meals to show and if the current page is within the valid range.
                 if (mealsToShow.isNotEmpty() && pagerState.currentPage < mealsToShow.size) {
-                    // If valid, call the onShareClick lambda with the meal at the current page.
                     onShareClick(mealsToShow[pagerState.currentPage])
-                    // Log the meal being shared.
-                    Log.d("ActionButtonsSection", "Sharing meal: ${mealsToShow[pagerState.currentPage]}")
+                    Log.d("ActionButtonsSection", "Sharing meal: ${mealsToShow[pagerState.currentPage]}") // [1]
                 } else {
-                    // If no meal is available or the page is out of range, display a Toast message.
-                    Toast.makeText(context, "No meal suggested to share", Toast.LENGTH_SHORT).show()
-                    // Log that no meal was available to share.
-                    Log.d("ActionButtonsSection", "No meal available to share")
+                    Toast.makeText(context, "No meal suggested to share", Toast.LENGTH_SHORT).show() // [2]
+                    Log.d("ActionButtonsSection", "No meal available to share") // [1]
                 }
             },
-            text = "Share", // Set the button text.
-            modifier = Modifier.weight(1f), // Distribute the available width evenly.
-            gradient = Brush.horizontalGradient(listOf(Color(0xAA00E676), Color(0xAA69F0AE))) // Set the button gradient.
+            text = "Share",
+            modifier = Modifier.weight(1f),
+            gradient = Brush.horizontalGradient(listOf(Color(0xAA00E676), Color(0xAA69F0AE)))
         )
-        // Create the "Reset" button using the GlassButton composable.
         GlassButton(
             onClick = {
-                // Log the click event for debugging using Log.d.
-                Log.d("ActionButtonsSection", "Reset button clicked")
-                // Call the onResetClick lambda.
+                Log.d("ActionButtonsSection", "Reset button clicked") // [1]
                 onResetClick()
             },
-            text = "Reset", // Set the button text.
-            modifier = Modifier.weight(1f), // Distribute the available width evenly.
-            gradient = Brush.horizontalGradient(listOf(Color(0xAAFF5252), Color(0xAAFF8A80))) // Set the button gradient.
+            text = "Reset",
+            modifier = Modifier.weight(1f),
+            gradient = Brush.horizontalGradient(listOf(Color(0xAAFF5252), Color(0xAAFF8A80)))
         )
     }
 }
